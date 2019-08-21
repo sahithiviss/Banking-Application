@@ -51,6 +51,7 @@ public class AccountServiceImpl implements AccountService{
 	public Account updateAccount(Account accountDetails) {
 		// TODO Auto-generated method stub
 		Account account = accountRepository.findById(accountDetails.getAccountNum()).get();
+		account.setBalance(accountDetails.getBalance());
 		account.setAccountType(accountDetails.getAccountType());
 		account.setBranch(accountDetails.getBranch());
 		return accountRepository.save(account);
