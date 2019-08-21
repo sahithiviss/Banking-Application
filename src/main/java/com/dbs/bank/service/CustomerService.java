@@ -19,12 +19,8 @@ public interface CustomerService {
 
 	ResponseEntity<?> deleteCustomer(long id);
 	
-	Customer findByPanId(String panId);
-	
 	Optional<Customer> findByEmailAndPassword(String email,String password);
 	
-	public Customer findByEmail(String email);
 	
-	public Customer findByPhoneNum(String phoneNum);
 
 }

@@ -51,34 +51,12 @@ public class CustomerServiceImpl implements CustomerService{
     	customer.setFirstname(customerDetails.getFirstname());
     	customer.setLastname(customerDetails.getLastname());
     	customer.setEmail(customerDetails.getEmail());
-    	customer.setPhoneNum(customerDetails.getPhoneNum());
-    	customer.setPanId(customerDetails.getPanId());
-    	
+    	customer.setPhoneNumber(customerDetails.getPhoneNumber());
+    	customer.setPanID(customerDetails.getPanID());
     	return customerRepository.save(customer);
     	
     }
-    
-    @Override
-    @Transactional
-	public Customer findByPanId(String panId) {
-		// TODO Auto-generated method stub
-		return customerRepository.findByPanId(panId);
-	}
-
-	@Override
-	@Transactional
-	public Customer findByEmail(String email) {
-		// TODO Auto-generated method stub
-		return customerRepository.findByEmail(email);
-	}
-
-	@Override
-	@Transactional
-	public Customer findByPhoneNum(String phoneNum) {
-		// TODO Auto-generated method stub
-		return customerRepository.findByPhoneNum(phoneNum);
-	}
-    
+     
     @Override
     @Transactional
     public ResponseEntity<?> deleteCustomer(long id){
