@@ -33,7 +33,13 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     @Transactional
     public Customer saveCustomer(Customer customer) {
+    	if((customerRepository.findByPanId(customer.getPanId())==null)
+    			&& (customerRepository.findByEmail(customer.getEmail())==null)
+    					&& (customerRepository.findByPhoneNum(customer.getPhoneNum())==null))
+    	{
     	return customerRepository.save(customer);
+    	}
+    	return null;
     }
     
     @Override
@@ -44,26 +50,41 @@ public class CustomerServiceImpl implements CustomerService{
     
     @Override
     @Transactional
-<<<<<<< HEAD
     public ResponseEntity<Customer> updateCustomer(long id,Customer customerDetails) {
     	Customer customer = customerRepository.findById(id).get();
     	
     	customer.setPassword(customerDetails.getPassword());
-=======
-    public Customer updateCustomer(Customer customerDetails) {
-    	Customer customer = customerRepository.findById(customerDetails.getCust_id()).get();
->>>>>>> da3a703b171ca3348dbd9d622ca72c4c1f97f6ef
     	customer.setFirstname(customerDetails.getFirstname());
     	customer.setLastname(customerDetails.getLastname());
     	customer.setEmail(customerDetails.getEmail());
-    	customer.setPhoneNumber(customerDetails.getPhoneNumber());
-    	customer.setPanID(customerDetails.getPanID());
-    	customer.setGender(customerDetails.getGender());
-    	customer.setDateOfBirth(customerDetails.getDateOfBirth());
-    	return customerRepository.save(customer);
+    	customer.setPhoneNum(customerDetails.getPhoneNum());
+    	customer.setPanId(customerDetails.getPanId());
+    	
+    	return ResponseEntity.ok().body(customer);
     	
     }
-     
+    
+    @Override
+    @Transactional
+	public Customer findByPanId(String panId) {
+		// TODO Auto-generated method stub
+		return customerRepository.findByPanId(panId);
+	}
+
+	@Override
+	@Transactional
+	public Customer findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return customerRepository.findByEmail(email);
+	}
+
+	@Override
+	@Transactional
+	public Customer findByPhoneNum(String phoneNum) {
+		// TODO Auto-generated method stub
+		return customerRepository.findByPhoneNum(phoneNum);
+	}
+    
     @Override
     @Transactional
     public ResponseEntity<?> deleteCustomer(long id){
