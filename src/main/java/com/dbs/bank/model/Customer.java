@@ -29,8 +29,6 @@ public class Customer implements Serializable{
 		this.cust_id = cust_id;
 	}
 
-	@Column(columnDefinition="boolean default true")
-	private boolean activated;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -121,7 +119,7 @@ public class Customer implements Serializable{
 	}
 
 	public Customer(long cust_id, String password, String firstname, String lastname, String email,
-			String phoneNum, String panId,boolean activated) {
+			String phoneNum, String panId) {
 		this.cust_id = cust_id;
 		this.password = password;
 		this.firstname = firstname;
@@ -129,44 +127,15 @@ public class Customer implements Serializable{
 		this.email = email;
 		this.phoneNum = phoneNum;
 		this.panId = panId;
-		this.activated=activated;
-	}
-
-
-	public boolean isActivated() {
-		return activated;
-	}
-
-
-	public void setActivated(boolean activated) {
-		this.activated = activated;
-	}
-
-
-	public Customer(boolean activated, long cust_id, String password, String firstname, String lastname, String email,
-			String phoneNum, String panId, String gender, LocalDate dateOfBirth) {
-		super();
-		this.activated = activated;
-		this.cust_id = cust_id;
-		this.password = password;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.email = email;
-		this.phoneNum = phoneNum;
-		this.panId = panId;
-		this.gender = gender;
-		this.dateOfBirth = dateOfBirth;
+		
 	}
 
 
 	@Override
 	public String toString() {
-		return "Customer [activated=" + activated + ", cust_id=" + cust_id + ", password=" + password + ", firstname="
-				+ firstname + ", lastname=" + lastname + ", email=" + email + ", phoneNum=" + phoneNum + ", panId="
-				+ panId + ", gender=" + gender + ", dateOfBirth=" + dateOfBirth + "]";
+		return "Customer [cust_id=" + cust_id + ", password=" + password + ", firstname=" + firstname + ", lastname="
+				+ lastname + ", email=" + email + ", phoneNum=" + phoneNum + ", panId=" + panId + ", accounts="
+				+ accounts + "]";
 	}
-
-
-	
 
 }

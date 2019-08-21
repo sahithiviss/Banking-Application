@@ -44,9 +44,10 @@ public class CustomerController {
 		//return customerService.findByEmailAndPassword(customer.get, password);
 	}
 	
-	@PutMapping("/customer")
-	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customerDetails) {
-		return customerService.updateCustomer(customerDetails);
+	@PutMapping("/customer/{id}")
+	public ResponseEntity<Customer> updateCustomer(@PathVariable("id") Long id,
+			@Valid @RequestBody Customer customerDetails) {
+		return customerService.updateCustomer(id, customerDetails);
 	}
 	
 	@DeleteMapping("/customer/{id}")

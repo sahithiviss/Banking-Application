@@ -90,25 +90,6 @@ public class Account {
 		this.customer = customer;
 		this.branch = branch;
 	}
-
-	public Account(long accountNum, String accountType, double balance, boolean activated, Customer customer,
-			Branch branch) {
-		super();
-		this.accountNum = accountNum;
-		this.accountType = accountType;
-		this.balance = balance;
-		this.activated = activated;
-		this.customer = customer;
-		this.branch = branch;
-	}
-
-	public long getAccountNum() {
-		return accountNum;
-	}
-
-	public void setAccountNum(long accountNum) {
-		this.accountNum = accountNum;
-	}
     
 	
 	

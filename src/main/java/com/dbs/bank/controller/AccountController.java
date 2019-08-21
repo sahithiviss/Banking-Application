@@ -42,9 +42,10 @@ public class AccountController {
 	}
 	
 
-	@PutMapping("/account")
-	public ResponseEntity<Account> updateAccount(@RequestBody Account accountDetails) {
-		return accountService.updateAccount(accountDetails);
+	@PutMapping("/account/{id}")
+	public ResponseEntity<Account> updateAccount(@PathVariable("id") Long id,
+			@Valid @RequestBody Account accountDetails) {
+		return accountService.updateAccount(id, accountDetails);
 	}
 	
 	@DeleteMapping("/account/{id}")
