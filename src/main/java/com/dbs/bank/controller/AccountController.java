@@ -26,9 +26,9 @@ public class AccountController {
 		return accountService.listAll();
 	}
 	
-	@PostMapping("/account")
-	public Account createAccount(@RequestBody Account account) {
-		return accountService.saveAccount(account);
+	@PostMapping("customer/{id}/account")
+	public Account createAccount(@PathVariable("id") Customer id, @Valid @RequestBody Account account) {
+		return accountService.saveAccount(id,account);
 		
 	}
 	
@@ -37,15 +37,16 @@ public class AccountController {
 		return accountService.findById(id);
 	}
 	
-	@GetMapping("account/customer/{id}")
+	@GetMapping("customer/{id}/account")
 	public List<Account> getAccountByCustomerId(@PathVariable("id") Customer id) {
 		return accountService.findByCustomer(id);
 	}
 	
 
-	@PutMapping("/account")
-	public Account updateAccount(@RequestBody Account accountDetails) {
-		return accountService.updateAccount(accountDetails);
+	@PutMapping("/account/{id}")
+	public ResponseEntity<Account> updateAccount(@PathVariable("id") Long id,
+			@Valid @RequestBody Account accountDetails) {
+		return accountService.updateAccount(id, accountDetails);
 	}
 	
 	@DeleteMapping("/account/{id}")

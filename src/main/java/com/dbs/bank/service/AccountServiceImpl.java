@@ -37,7 +37,19 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	public Account saveAccount(Account account) {
+	public Account saveAccount(Customer id,Account account) {
+		System.out.println("Accounts : " + accountRepository.findByCustomer(id));
+		List<Account> accounts = findByCustomer(id);
+		for(Account acc : accounts) {
+		      if(acc.getAccountType().equalsIgnoreCase("joint")) {
+		    	 System.out.println();
+		         System.out.println("Sorry you already have " + acc.getAccountType() + " account type");
+		         System.out.println();
+		         System.out.println();
+		         return null;
+		      }
+		      
+		   }
 		return accountRepository.save(account);
 	}
 
@@ -48,13 +60,12 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	public Account updateAccount(Account accountDetails) {
+	public ResponseEntity<Account> updateAccount(long id, Account accountDetails) {
 		// TODO Auto-generated method stub
-		Account account = accountRepository.findById(accountDetails.getAccountNum()).get();
-		account.setBalance(accountDetails.getBalance());
+		Account account = accountRepository.findById(id).get();
 		account.setAccountType(accountDetails.getAccountType());
 		account.setBranch(accountDetails.getBranch());
-		return accountRepository.save(account);
+		return ResponseEntity.ok().body(account);
 	}
 
 	@Override

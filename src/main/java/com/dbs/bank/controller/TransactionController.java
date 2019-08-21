@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.dbs.bank.model.Account;
 import com.dbs.bank.model.Transaction;
 import com.dbs.bank.service.TransactionService;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
@@ -24,7 +25,7 @@ public class TransactionController {
 		return transactionService.listAll();
 	}
 	
-	@GetMapping("transaction/{id}")
+	@GetMapping("/transaction/{id}")
 	public Transaction getTransactionById(@PathVariable("id") Long id) {
 		return transactionService.findById(id);
 	}

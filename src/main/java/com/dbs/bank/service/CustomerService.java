@@ -15,12 +15,16 @@ public interface CustomerService {
 
 	Customer findById(long id);
 
-	Customer updateCustomer(Customer customerDetails);
+	ResponseEntity<Customer> updateCustomer(long id, Customer customerDetails);
 
 	ResponseEntity<?> deleteCustomer(long id);
 	
+	Customer findByPanId(String panId);
+	
 	Optional<Customer> findByEmailAndPassword(String email,String password);
 	
+	public Customer findByEmail(String email);
 	
+	public Customer findByPhoneNum(String phoneNum);
 
 }
