@@ -16,11 +16,7 @@ public interface AccountService {
 
 	Account findById(long id);
 
-<<<<<<< HEAD
-	ResponseEntity<Account> updateAccount(long id, Account accountDetails);
-=======
 	Account updateAccount(Account accountDetails);
->>>>>>> da3a703b171ca3348dbd9d622ca72c4c1f97f6ef
 
 	ResponseEntity<?> deleteAccount(long id);
 	

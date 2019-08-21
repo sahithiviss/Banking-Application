@@ -41,16 +41,9 @@ public class CustomerController {
 		return customerService.findByEmailAndPassword(email, password);
 	}
 	
-<<<<<<< HEAD
-	@PutMapping("/customer/{id}")
-	public ResponseEntity<Customer> updateCustomer(@PathVariable("id") Long id,
-			@Valid @RequestBody Customer customerDetails) {
-		return customerService.updateCustomer(id, customerDetails);
-=======
 	@PutMapping("/customer")
 	public Customer updateCustomer(@RequestBody Customer customerDetails) {
 		return customerService.updateCustomer(customerDetails);
->>>>>>> da3a703b171ca3348dbd9d622ca72c4c1f97f6ef
 	}
 	
 	@DeleteMapping("/customer/{id}")

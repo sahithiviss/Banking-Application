@@ -29,6 +29,8 @@ public class Customer implements Serializable{
 		this.cust_id = cust_id;
 	}
 
+	@Column(columnDefinition="boolean default true")
+	private boolean activated;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -116,10 +118,6 @@ public class Customer implements Serializable{
 		return phoneNumber;
 	}
 
-<<<<<<< HEAD
-	public Customer(long cust_id, String password, String firstname, String lastname, String email,
-			String phoneNum, String panId) {
-=======
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
@@ -140,39 +138,24 @@ public class Customer implements Serializable{
 			String phoneNumber, String panID, String gender, LocalDate dateOfBirth) {
 		super();
 		this.activated = activated;
->>>>>>> da3a703b171ca3348dbd9d622ca72c4c1f97f6ef
 		this.cust_id = cust_id;
 		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
-<<<<<<< HEAD
-		this.phoneNum = phoneNum;
-		this.panId = panId;
-		
-=======
 		this.phoneNumber = phoneNumber;
 		this.panID = panID;
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
->>>>>>> da3a703b171ca3348dbd9d622ca72c4c1f97f6ef
 	}
 
 
 	@Override
 	public String toString() {
-<<<<<<< HEAD
-		return "Customer [cust_id=" + cust_id + ", password=" + password + ", firstname=" + firstname + ", lastname="
-				+ lastname + ", email=" + email + ", phoneNum=" + phoneNum + ", panId=" + panId + ", accounts="
-				+ accounts + "]";
-	}
-
-=======
 		return "Customer [activated=" + activated + ", cust_id=" + cust_id + ", password=" + password + ", firstname="
 				+ firstname + ", lastname=" + lastname + ", email=" + email + ", phoneNumber=" + phoneNumber
 				+ ", panID=" + panID + ", gender=" + gender + ", dateOfBirth=" + dateOfBirth + "]";
 	}
 
 
->>>>>>> da3a703b171ca3348dbd9d622ca72c4c1f97f6ef
 }

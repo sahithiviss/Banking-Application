@@ -48,16 +48,10 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-<<<<<<< HEAD
-	public ResponseEntity<Account> updateAccount(long id, Account accountDetails) {
-		// TODO Auto-generated method stub
-		Account account = accountRepository.findById(id).get();
-=======
 	public Account updateAccount(Account accountDetails) {
 		// TODO Auto-generated method stub
 		Account account = accountRepository.findById(accountDetails.getAccountNum()).get();
 		account.setBalance(accountDetails.getBalance());
->>>>>>> da3a703b171ca3348dbd9d622ca72c4c1f97f6ef
 		account.setAccountType(accountDetails.getAccountType());
 		account.setBranch(accountDetails.getBranch());
 		return accountRepository.save(account);

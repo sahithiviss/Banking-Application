@@ -15,11 +15,7 @@ public interface CustomerService {
 
 	Customer findById(long id);
 
-<<<<<<< HEAD
-	ResponseEntity<Customer> updateCustomer(long id, Customer customerDetails);
-=======
 	Customer updateCustomer(Customer customerDetails);
->>>>>>> da3a703b171ca3348dbd9d622ca72c4c1f97f6ef
 
 	ResponseEntity<?> deleteCustomer(long id);
 	

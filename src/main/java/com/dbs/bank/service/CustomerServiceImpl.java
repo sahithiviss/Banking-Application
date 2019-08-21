@@ -44,15 +44,8 @@ public class CustomerServiceImpl implements CustomerService{
     
     @Override
     @Transactional
-<<<<<<< HEAD
-    public ResponseEntity<Customer> updateCustomer(long id,Customer customerDetails) {
-    	Customer customer = customerRepository.findById(id).get();
-    	
-    	customer.setPassword(customerDetails.getPassword());
-=======
     public Customer updateCustomer(Customer customerDetails) {
     	Customer customer = customerRepository.findById(customerDetails.getCust_id()).get();
->>>>>>> da3a703b171ca3348dbd9d622ca72c4c1f97f6ef
     	customer.setFirstname(customerDetails.getFirstname());
     	customer.setLastname(customerDetails.getLastname());
     	customer.setEmail(customerDetails.getEmail());
