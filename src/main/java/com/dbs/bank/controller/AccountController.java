@@ -13,6 +13,7 @@ import com.dbs.bank.model.Account;
 import com.dbs.bank.model.Customer;
 import com.dbs.bank.service.AccountService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class AccountController {

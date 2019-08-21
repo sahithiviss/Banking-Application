@@ -33,13 +33,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     @Transactional
     public Customer saveCustomer(Customer customer) {
-    	if((customerRepository.findByPanId(customer.getPanId())==null)
-    			&& (customerRepository.findByEmail(customer.getEmail())==null)
-    					&& (customerRepository.findByPhoneNum(customer.getPhoneNum())==null))
-    	{
     	return customerRepository.save(customer);
-    	}
-    	return null;
     }
     
     @Override
@@ -50,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService{
     
     @Override
     @Transactional
-    public ResponseEntity<Customer> updateCustomer(Customer customerDetails) {
+    public Customer updateCustomer(Customer customerDetails) {
     	Customer customer = customerRepository.findById(customerDetails.getCust_id()).get();
     	
     	customer.setPassword(customerDetails.getPassword());
@@ -60,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService{
     	customer.setPhoneNum(customerDetails.getPhoneNum());
     	customer.setPanId(customerDetails.getPanId());
     	
-    	return ResponseEntity.ok().body(customer);
+    	return customerRepository.save(customer);
     	
     }
     

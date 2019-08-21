@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import com.dbs.bank.model.Customer;
 import com.dbs.bank.service.CustomerService;
 
-
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
@@ -21,13 +20,12 @@ public class CustomerController {
 	@Autowired
 	CustomerService customerService;
 	
-	
-	@GetMapping("/customers")
+	@GetMapping("/customer")
 	public List<Customer> getAllCustomers(){
 		return customerService.listAll();
 	}
 	
-	@PostMapping("/customers")
+	@PostMapping("/customer")
 	public Customer createCustomer(@Valid @RequestBody Customer customer) {
 		return customerService.saveCustomer(customer);
 		
@@ -38,14 +36,13 @@ public class CustomerController {
 		return customerService.findById(id);
 	}
 	
-	@PostMapping("/customer")
-	public Optional<Customer> getCustomerByEmailAndPassword(@RequestBody Customer customer) {
-		return customerService.findByEmailAndPassword(customer.getEmail(), customer.getPassword());
-		//return customerService.findByEmailAndPassword(customer.get, password);
+	@GetMapping("/customer/{email}/{password}")
+	public Optional<Customer> getCustomerByEmailAndPassword(@PathVariable("email") String email,@PathVariable("password") String password) {
+		return customerService.findByEmailAndPassword(email, password);
 	}
 	
-	@PutMapping("/customer")
-	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customerDetails) {
+	@PutMapping("/customer/{id}")
+	public Customer updateCustomer(@RequestBody Customer customerDetails) {
 		return customerService.updateCustomer(customerDetails);
 	}
 	
@@ -53,5 +50,4 @@ public class CustomerController {
 	public ResponseEntity<?> deleteCustomer(@PathVariable("id") Long id){
 		return customerService.deleteCustomer(id);
 	}
-
 }

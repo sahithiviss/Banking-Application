@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.dbs.bank.model.Account;
 import com.dbs.bank.model.Transaction;
 import com.dbs.bank.service.TransactionService;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1")
 public class TransactionController {
