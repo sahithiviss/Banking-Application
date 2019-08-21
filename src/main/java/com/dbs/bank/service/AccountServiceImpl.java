@@ -37,19 +37,7 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	public Account saveAccount(Customer id,Account account) {
-		System.out.println("Accounts : " + accountRepository.findByCustomer(id));
-		List<Account> accounts = findByCustomer(id);
-		for(Account acc : accounts) {
-		      if(acc.getAccountType().equalsIgnoreCase("joint")) {
-		    	 System.out.println();
-		         System.out.println("Sorry you already have " + acc.getAccountType() + " account type");
-		         System.out.println();
-		         System.out.println();
-		         return null;
-		      }
-		      
-		   }
+	public Account saveAccount(Account account) {
 		return accountRepository.save(account);
 	}
 
