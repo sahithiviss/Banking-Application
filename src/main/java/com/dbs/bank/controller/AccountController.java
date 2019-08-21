@@ -44,7 +44,7 @@ public class AccountController {
 	
 
 	@PutMapping("/account")
-	public ResponseEntity<Account> updateAccount(@RequestBody Account accountDetails) {
+	public Account updateAccount(@RequestBody Account accountDetails) {
 		return accountService.updateAccount(accountDetails);
 	}
 	

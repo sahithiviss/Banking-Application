@@ -46,13 +46,13 @@ public class CustomerServiceImpl implements CustomerService{
     @Transactional
     public Customer updateCustomer(Customer customerDetails) {
     	Customer customer = customerRepository.findById(customerDetails.getCust_id()).get();
-    	
-    	customer.setPassword(customerDetails.getPassword());
     	customer.setFirstname(customerDetails.getFirstname());
     	customer.setLastname(customerDetails.getLastname());
     	customer.setEmail(customerDetails.getEmail());
     	customer.setPhoneNumber(customerDetails.getPhoneNumber());
     	customer.setPanID(customerDetails.getPanID());
+    	customer.setGender(customerDetails.getGender());
+    	customer.setDateOfBirth(customerDetails.getDateOfBirth());
     	return customerRepository.save(customer);
     	
     }

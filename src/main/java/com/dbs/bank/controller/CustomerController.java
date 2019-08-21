@@ -41,7 +41,7 @@ public class CustomerController {
 		return customerService.findByEmailAndPassword(email, password);
 	}
 	
-	@PutMapping("/customer/{id}")
+	@PutMapping("/customer")
 	public Customer updateCustomer(@RequestBody Customer customerDetails) {
 		return customerService.updateCustomer(customerDetails);
 	}
