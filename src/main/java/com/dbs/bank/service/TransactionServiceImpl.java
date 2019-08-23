@@ -36,11 +36,9 @@ public class TransactionServiceImpl implements TransactionService{
 		return this.transactionRepository.save(transaction);
 	}
 
-
-
 	@Override
 	@Transactional
-	public List<Transaction> findByFromAccount(Account id) {
+	public Optional<List<Transaction>> findByFromAccount(Account id) {
 		return this.transactionRepository.findByFromAccount(id);
 	}
 
@@ -52,9 +50,16 @@ public class TransactionServiceImpl implements TransactionService{
 
 	@Override
 	@Transactional
-	public List<Transaction> findByToAccount(Account id) {
+	public Optional<List<Transaction>> findByToAccount(Account id) {
 		return this.transactionRepository.findByToAccount(id);
 		
 	}
+
+	@Override
+	public Optional<List<Transaction>> findByFromAccountOrToAccount(Account id) {
+		return this.transactionRepository.findByFromAccountOrToAccount(id,id);
+	}
+	
+	
 
 }

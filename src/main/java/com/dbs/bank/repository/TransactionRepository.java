@@ -11,6 +11,11 @@ import com.dbs.bank.model.Transaction;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long>{
-	List<Transaction> findByFromAccount(Account id);
-	List<Transaction> findByToAccount(Account id);
+
+	Optional<List<Transaction>> findByFromAccount(Account id);
+	
+	Optional<List<Transaction>> findByToAccount(Account id);
+	
+	Optional<List<Transaction>> findByFromAccountOrToAccount(Account id,Account id1);
+
 }

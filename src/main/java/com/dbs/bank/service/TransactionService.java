@@ -16,8 +16,10 @@ public interface TransactionService {
 
 	Transaction findById(long id);
 
-	List<Transaction> findByFromAccount(Account id);
+	Optional<List<Transaction>> findByFromAccount(Account id);
 	
-	List<Transaction> findByToAccount(Account id);
+	Optional<List<Transaction>> findByToAccount(Account id);
+
+	Optional<List<Transaction>> findByFromAccountOrToAccount(Account id);
 
 }

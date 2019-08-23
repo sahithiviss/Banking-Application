@@ -35,19 +35,14 @@ public class TransactionController {
 		
 	}
 	
-//	@GetMapping("customer/account/transaction/{id}")
-//	public Optional<List<Transaction>> getTransactionByAccountNum(@PathVariable("id") Account id) {
-//		return transactionService.findByAccount(id);
-//	}
-	
-	@GetMapping("toAaccount/transaction/{id}")
-	public List<Transaction> getTransactionOfToAccountNum(@PathVariable("id") Account id) {
-		return transactionService.findByToAccount(id);
+	@GetMapping("transaction/account/{id}")
+	public Optional<List<Transaction>> getTransactionOfToAccountNum(@PathVariable("id") Account id) {
+		return transactionService.findByFromAccountOrToAccount(id);
 	}
 	
 	@GetMapping("fromAccount/transaction/{id}")
-	public List<Transaction> getTransactionOfFromAccountNum(@PathVariable("id") Account id) {
-		return transactionService.findByFromAccount(id);
+	public Optional<List<Transaction>> getTransactionOfFromAccountNum(@PathVariable("id") Account id) {
+		return transactionService.findByToAccount(id);
 	}
 
 }

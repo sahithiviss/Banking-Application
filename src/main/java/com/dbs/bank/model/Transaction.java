@@ -19,17 +19,16 @@ public class Transaction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long tid;
-	
 	private long ammount;
 	
 	private LocalDateTime time; 
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name="from_account", nullable = false)
     private Account fromAccount;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name="to_account", nullable = false)
     private Account toAccount;
     

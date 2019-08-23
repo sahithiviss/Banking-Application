@@ -42,6 +42,7 @@ public class Customer implements Serializable{
 	private String email;
 	private String phoneNumber;
 	
+	@Column(unique = true)
 	private String panID;
 	
 	private String gender;

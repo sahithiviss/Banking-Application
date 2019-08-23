@@ -24,6 +24,18 @@ public class Account {
 	@Column(columnDefinition="boolean default true")
 	private boolean activated;
 
+	@ManyToOne
+	@JoinColumn(name="cust_id", nullable = false)
+	//@JsonBackReference
+	private Customer customer;
+	
+	@ManyToOne
+	@JoinColumn(name="branchIFSC",nullable= false)
+	private Branch branch;
+	
+	@OneToMany(mappedBy = "fromAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Transaction> transactions = new HashSet<>();
+	
 	public boolean isActivated() {
 		return activated;
 	}
@@ -40,21 +52,6 @@ public class Account {
 		this.balance = balance;
 	}
 
-	@ManyToOne
-	@JoinColumn(name="cust_id", nullable = false)
-	//@JsonBackReference
-	private Customer customer;
-	
-	@ManyToOne
-	@JoinColumn(name="branchIFSC",nullable= false)
-	private Branch branch;
-	
-	@OneToMany(mappedBy = "fromAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<Transaction> transactions = new HashSet<>();
-	
-	
-	
-	
 	public String getAccountType() {
 		return accountType;
 	}
@@ -73,9 +70,7 @@ public class Account {
 	public void setBranch(Branch branch) {
 		this.branch = branch;
 	}
-	
-	
-	
+
     public Account() {}
 	public Account(long accountNum, String accountType, Customer customer) {
 		super();
