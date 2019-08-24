@@ -1,5 +1,6 @@
 package com.dbs.bank.repository;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,5 +18,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>{
 	Optional<List<Transaction>> findByToAccount(Account id);
 	
 	Optional<List<Transaction>> findByFromAccountOrToAccount(Account id,Account id1);
+	
+
+	List<Transaction> findByFromAccountAndDate(Account fromAccount, Date valueOf);
 
 }

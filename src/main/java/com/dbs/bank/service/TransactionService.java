@@ -1,5 +1,6 @@
 package com.dbs.bank.service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +13,7 @@ public interface TransactionService {
 	
 	List<Transaction> listAll();
 
-	Transaction saveTransaction(Transaction transaction);
+	String saveTransaction(Transaction transaction);
 
 	Transaction findById(long id);
 

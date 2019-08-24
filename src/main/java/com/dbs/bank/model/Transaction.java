@@ -1,8 +1,11 @@
 package com.dbs.bank.model;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,9 +24,13 @@ public class Transaction {
 	private long tid;
 	private long ammount;
 	
-	private LocalDateTime time; 
+	private Date date; 
+	
+	private Time time;
 
-
+	@Column(columnDefinition="boolean default false")
+	private boolean flag;
+	
     @ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name="from_account", nullable = false)
     private Account fromAccount;
@@ -49,13 +56,25 @@ public class Transaction {
 		super();
 	}
 
-	public LocalDateTime getTime() {
+
+	public boolean isFlag() {
+		return flag;
+	}
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public Time getTime() {
 		return time;
 	}
-	public void setTime(LocalDateTime time) {
+	public void setTime(Time time) {
 		this.time = time;
 	}
-
 	public Account getFromAccount() {
 		return fromAccount;
 	}
