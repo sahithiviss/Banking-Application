@@ -1,13 +1,19 @@
 package com.dbs.bank.service;
 
+import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.transaction.Transactional;
 
+import org.apache.jasper.tagplugins.jstl.core.Out;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,29 +42,36 @@ public class TransactionServiceImpl implements TransactionService{
 	@Override
 	@Transactional
 	public String saveTransaction(Transaction transaction) {
-		 	double fromAccountBalance = transaction.getFromAccount().getBalance();
-	        double toAccountBalance = transaction.getToAccount().getBalance();
-	        
-	        System.out.println("Current Transaction : " + transaction.getToAccount().getAccountType());
-	        System.out.println("From account Balance : " + transaction.getFromAccount().getBalance());
-	        System.out.println("To account Balance : " + transaction.getToAccount().getBalance());
-	        System.out.println("After transaction....");
-	        
-	        if((fromAccountBalance - transaction.getAmmount()) < 5000) {
-	            System.out.println("Transaction cannot be done... Your account balance will be short of $5,000 with this transaction");
-	            return "Transaction cannot be done... Your account balance will be short of $5,000 with this transaction";
-	        }
-	        else {
-	            fromAccountBalance = fromAccountBalance - transaction.getAmmount();
-	            toAccountBalance = toAccountBalance + transaction.getAmmount();
-	            
-	            transaction.getFromAccount().setBalance(fromAccountBalance);
-	            transaction.getToAccount().setBalance(toAccountBalance);
-	        }
-	        System.out.println("From account Balance : " + transaction.getFromAccount().getBalance());
-	        System.out.println("To account Balance : " + transaction.getToAccount().getBalance());
-	        transactionRepository.save(transaction);
-	        return "Transaction Successfull";
+			
+			List<Transaction> transactions=transactionRepository.findByFromAccountAndDate(transaction.getFromAccount(),Date.valueOf(LocalDate.now()));
+			long sum=0;
+			for(int i=0;i<transactions.size();i++) {
+				sum=sum+transactions.get(i).getAmmount();
+			}
+			System.out.println("\n"+transactions+"\n"+sum);
+				double fromAccountBalance = transaction.getFromAccount().getBalance();
+		        double toAccountBalance = transaction.getToAccount().getBalance();
+		        if((fromAccountBalance - transaction.getAmmount()) < 5000) {
+		            return "Transaction cannot be done... Your account balance will be short of $5,000 with this transaction";
+		        }
+		        else {
+			        transaction.setDate(Date.valueOf(LocalDate.now())); 
+		            fromAccountBalance = fromAccountBalance - transaction.getAmmount();
+		            transaction.getFromAccount().setBalance(fromAccountBalance);
+					
+		            if(sum+transaction.getAmmount()<=10000) {
+		            	toAccountBalance = toAccountBalance + transaction.getAmmount();
+		            	transaction.getToAccount().setBalance(toAccountBalance);
+		            	transactionRepository.save(transaction);
+				        return "Transaction successfull";
+		            }
+		            else {
+		            	transaction.setFlag(true);
+				        transactionRepository.save(transaction);
+				        return "Transaction limit exceeded/ Awaiting Bank Approval";
+		            }
+		        }
+
 	}
 
 	@Override

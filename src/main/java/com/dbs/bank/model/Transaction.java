@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,6 +28,9 @@ public class Transaction {
 	
 	private Time time;
 
+	@Column(columnDefinition="boolean default false")
+	private boolean flag;
+	
     @ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name="from_account", nullable = false)
     private Account fromAccount;
@@ -53,6 +57,12 @@ public class Transaction {
 	}
 
 
+	public boolean isFlag() {
+		return flag;
+	}
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
 	public Date getDate() {
 		return date;
 	}
