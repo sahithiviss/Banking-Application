@@ -1,5 +1,8 @@
 package com.dbs.bank.service;
 
+import java.sql.Time;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,8 +35,30 @@ public class TransactionServiceImpl implements TransactionService{
 
 	@Override
 	@Transactional
-	public Transaction saveTransaction(Transaction transaction) {
-		return this.transactionRepository.save(transaction);
+	public String saveTransaction(Transaction transaction) {
+		 	double fromAccountBalance = transaction.getFromAccount().getBalance();
+	        double toAccountBalance = transaction.getToAccount().getBalance();
+	        
+	        System.out.println("Current Transaction : " + transaction.getToAccount().getAccountType());
+	        System.out.println("From account Balance : " + transaction.getFromAccount().getBalance());
+	        System.out.println("To account Balance : " + transaction.getToAccount().getBalance());
+	        System.out.println("After transaction....");
+	        
+	        if((fromAccountBalance - transaction.getAmmount()) < 5000) {
+	            System.out.println("Transaction cannot be done... Your account balance will be short of $5,000 with this transaction");
+	            return "Transaction cannot be done... Your account balance will be short of $5,000 with this transaction";
+	        }
+	        else {
+	            fromAccountBalance = fromAccountBalance - transaction.getAmmount();
+	            toAccountBalance = toAccountBalance + transaction.getAmmount();
+	            
+	            transaction.getFromAccount().setBalance(fromAccountBalance);
+	            transaction.getToAccount().setBalance(toAccountBalance);
+	        }
+	        System.out.println("From account Balance : " + transaction.getFromAccount().getBalance());
+	        System.out.println("To account Balance : " + transaction.getToAccount().getBalance());
+	        transactionRepository.save(transaction);
+	        return "Transaction Successfull";
 	}
 
 	@Override

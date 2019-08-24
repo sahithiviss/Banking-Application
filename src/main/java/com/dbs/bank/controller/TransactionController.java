@@ -30,7 +30,7 @@ public class TransactionController {
 	}
 	
 	@PostMapping("/transaction")
-	public Transaction createTransaction(@RequestBody Transaction transaction) {
+	public String createTransaction(@RequestBody Transaction transaction) {
 		return transactionService.saveTransaction(transaction);
 		
 	}
