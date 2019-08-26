@@ -23,8 +23,6 @@ public interface TransactionService {
 
 	Optional<List<Transaction>> findByFromAccountOrToAccount(Account id);
 	
-	Transaction updateTransaction(Transaction transaction);
-
 	ResponseEntity<Transaction> updateTransaction(Transaction transaction);
 
 }
