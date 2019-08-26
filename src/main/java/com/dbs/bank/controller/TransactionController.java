@@ -44,5 +44,12 @@ public class TransactionController {
 	public Optional<List<Transaction>> getTransactionOfFromAccountNum(@PathVariable("id") Account id) {
 		return transactionService.findByToAccount(id);
 	}
+	
+
+	@PutMapping("/transaction")
+    public Transaction updateTransaction(@RequestBody Transaction transaction) {
+        return transactionService.updateTransaction(transaction);
+    }
+
 
 }

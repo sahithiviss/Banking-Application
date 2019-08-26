@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import com.dbs.bank.model.Account;
 import com.dbs.bank.model.Transaction;
+import com.dbs.bank.repository.AccountRepository;
 import com.dbs.bank.repository.TransactionRepository;
 
 @Service
@@ -27,6 +28,9 @@ public class TransactionServiceImpl implements TransactionService{
 
 	@Autowired
 	private TransactionRepository transactionRepository;
+	
+	@Autowired
+	private AccountRepository accountRepository;
 	
 	public TransactionServiceImpl(TransactionRepository transactionRepository) {
 		super();
@@ -39,11 +43,6 @@ public class TransactionServiceImpl implements TransactionService{
 		return this.transactionRepository.findAll();
 	}
 
-//	@Override
-//	@Transactional
-//	public Transaction saveTransaction(Transaction transaction) {
-//		return this.transactionRepository.save(transaction);
-//	}
 	@Override
 	@Transactional
 	public String saveTransaction(Transaction transaction) {
@@ -63,10 +62,12 @@ public class TransactionServiceImpl implements TransactionService{
 			        transaction.setDate(Date.valueOf(LocalDate.now())); 
 		            fromAccountBalance = fromAccountBalance - transaction.getAmmount();
 		            transaction.getFromAccount().setBalance(fromAccountBalance);
-					
+					this.accountRepository.save(transaction.getFromAccount());
 		            if(sum+transaction.getAmmount()<=10000) {
 		            	toAccountBalance = toAccountBalance + transaction.getAmmount();
 		            	transaction.getToAccount().setBalance(toAccountBalance);
+		            	System.out.println(transaction.getToAccount().getBalance());
+						this.accountRepository.save(transaction.getToAccount());
 		            	transactionRepository.save(transaction);
 				        return "Transaction successfull";
 		            }
@@ -103,6 +104,19 @@ public class TransactionServiceImpl implements TransactionService{
 		return this.transactionRepository.findByFromAccountOrToAccount(id,id);
 	}
 	
-	
+
+	@Override
+    @Transactional
+    public Transaction updateTransaction(Transaction transaction) {
+        if(transaction.isFlag()) {
+	        double toAccountBalance = transaction.getToAccount().getBalance();       
+	        toAccountBalance = toAccountBalance + transaction.getAmmount();
+	        transaction.getToAccount().setBalance(toAccountBalance);
+	        transaction.setFlag(false);
+			this.accountRepository.save(transaction.getToAccount());
+	        return this.transactionRepository.save(transaction);
+        }
+        return null;
+    }
 
 }
