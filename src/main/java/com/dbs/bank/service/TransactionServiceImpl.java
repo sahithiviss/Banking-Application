@@ -105,8 +105,7 @@ public class TransactionServiceImpl implements TransactionService{
 	}
 	
 
-<<<<<<< HEAD
-	
+
 
 //	@Override
 //    @Transactional
@@ -127,8 +126,7 @@ public class TransactionServiceImpl implements TransactionService{
 //        return null;
 //    }
 	
-=======
->>>>>>> d4015dc059265a78e0fa69fa7e51fcac232ed94f
+
 	@Override
     @Transactional
     public Transaction updateTransaction(Transaction transaction) {
@@ -139,11 +137,10 @@ public class TransactionServiceImpl implements TransactionService{
 	        transaction.setFlag(false);
 			this.accountRepository.save(transaction.getToAccount());
 	        return this.transactionRepository.save(transaction);
-<<<<<<< HEAD
+
 //			this.transactionRepository.save(transaction);
 //	        return ResponseEntity.ok().build();
-=======
->>>>>>> d4015dc059265a78e0fa69fa7e51fcac232ed94f
+
         }
         
         return null;
