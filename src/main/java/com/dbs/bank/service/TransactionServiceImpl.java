@@ -111,7 +111,7 @@ public class TransactionServiceImpl implements TransactionService{
 
 	@Override
     @Transactional
-    public ResponseEntity<Transaction> updateTransaction(Transaction transaction) {
+    public Transaction updateTransaction(Transaction transaction) {
 
         if(transaction.isFlag()) {
 	        double toAccountBalance = transaction.getToAccount().getBalance();       
@@ -120,8 +120,8 @@ public class TransactionServiceImpl implements TransactionService{
 	        transaction.setFlag(false);
 			this.accountRepository.save(transaction.getToAccount());
 
-	        this.transactionRepository.save(transaction);
-	        return ResponseEntity.ok().build();
+	        return this.transactionRepository.save(transaction);
+	        //return ResponseEntity.ok().build();
 
 	        
 
