@@ -44,7 +44,6 @@ public class TransactionServiceImpl implements TransactionService{
 	}
 
 	@Override
-
 	@Transactional
 	public String saveTransaction(Transaction transaction) {
 			
@@ -79,8 +78,7 @@ public class TransactionServiceImpl implements TransactionService{
 		            }
 		        }
 
-
-    }
+	}
 
 	@Override
 	@Transactional
@@ -107,6 +105,7 @@ public class TransactionServiceImpl implements TransactionService{
 	}
 	
 
+<<<<<<< HEAD
 	
 
 //	@Override
@@ -128,20 +127,23 @@ public class TransactionServiceImpl implements TransactionService{
 //        return null;
 //    }
 	
+=======
+>>>>>>> d4015dc059265a78e0fa69fa7e51fcac232ed94f
 	@Override
     @Transactional
     public Transaction updateTransaction(Transaction transaction) {
-
         if(transaction.isFlag()) {
 	        double toAccountBalance = transaction.getToAccount().getBalance();       
 	        toAccountBalance = toAccountBalance + transaction.getAmmount();
 	        transaction.getToAccount().setBalance(toAccountBalance);
 	        transaction.setFlag(false);
 			this.accountRepository.save(transaction.getToAccount());
-
 	        return this.transactionRepository.save(transaction);
+<<<<<<< HEAD
 //			this.transactionRepository.save(transaction);
 //	        return ResponseEntity.ok().build();
+=======
+>>>>>>> d4015dc059265a78e0fa69fa7e51fcac232ed94f
         }
         
         return null;
