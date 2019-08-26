@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import com.dbs.bank.model.Account;
 import com.dbs.bank.model.Transaction;
+import com.dbs.bank.repository.AccountRepository;
 import com.dbs.bank.repository.TransactionRepository;
 
 @Service
@@ -27,6 +28,9 @@ public class TransactionServiceImpl implements TransactionService{
 
 	@Autowired
 	private TransactionRepository transactionRepository;
+	
+	@Autowired
+	private AccountRepository accountRepository;
 	
 	public TransactionServiceImpl(TransactionRepository transactionRepository) {
 		super();
@@ -45,39 +49,41 @@ public class TransactionServiceImpl implements TransactionService{
 //		return this.transactionRepository.save(transaction);
 //	}
 	@Override
-	@Transactional
-	public String saveTransaction(Transaction transaction) {
-			
-			List<Transaction> transactions=transactionRepository.findByFromAccountAndDate(transaction.getFromAccount(),Date.valueOf(LocalDate.now()));
-			long sum=0;
-			for(int i=0;i<transactions.size();i++) {
-				sum=sum+transactions.get(i).getAmmount();
-			}
-			System.out.println("\n"+transactions+"\n"+sum);
-				double fromAccountBalance = transaction.getFromAccount().getBalance();
-		        double toAccountBalance = transaction.getToAccount().getBalance();
-		        if((fromAccountBalance - transaction.getAmmount()) < 5000) {
-		            return "Transaction cannot be done... Your account balance will be short of $5,000 with this transaction";
-		        }
-		        else {
-			        transaction.setDate(Date.valueOf(LocalDate.now())); 
-		            fromAccountBalance = fromAccountBalance - transaction.getAmmount();
-		            transaction.getFromAccount().setBalance(fromAccountBalance);
-					
-		            if(sum+transaction.getAmmount()<=10000) {
-		            	toAccountBalance = toAccountBalance + transaction.getAmmount();
-		            	transaction.getToAccount().setBalance(toAccountBalance);
-		            	transactionRepository.save(transaction);
-				        return "Transaction successfull";
-		            }
-		            else {
-		            	transaction.setFlag(true);
-				        transactionRepository.save(transaction);
-				        return "Transaction limit exceeded/ Awaiting Bank Approval";
-		            }
-		        }
+    @Transactional
+    public String saveTransaction(Transaction transaction) {
+            
+            List<Transaction> transactions=transactionRepository.findByFromAccountAndDate(transaction.getFromAccount(),Date.valueOf(LocalDate.now()));
+            long sum=0;
+            for(int i=0;i<transactions.size();i++) {
+                sum=sum+transactions.get(i).getAmmount();
+            }
+            System.out.println("\n"+transactions+"\n"+sum);
+                double fromAccountBalance = transaction.getFromAccount().getBalance();
+                double toAccountBalance = transaction.getToAccount().getBalance();
+                if((fromAccountBalance - transaction.getAmmount()) < 5000) {
+                    return "Transaction cannot be done... Your account balance will be short of $5,000 with this transaction";
+                }
+                else {
+                    transaction.setDate(Date.valueOf(LocalDate.now())); 
+                    fromAccountBalance = fromAccountBalance - transaction.getAmmount();
+                    transaction.getFromAccount().setBalance(fromAccountBalance);
+                    this.accountRepository.save(transaction.getFromAccount());
+                    if(sum+transaction.getAmmount()<=10000) {
+                        toAccountBalance = toAccountBalance + transaction.getAmmount();
+                        transaction.getToAccount().setBalance(toAccountBalance);
+                        System.out.println(transaction.getToAccount().getBalance());
+                        this.accountRepository.save(transaction.getToAccount());
+                        transactionRepository.save(transaction);
+                        return "Transaction successfull";
+                    }
+                    else {
+                        transaction.setFlag(true);
+                        transactionRepository.save(transaction);
+                        return "Transaction limit exceeded/ Awaiting Bank Approval";
+                    }
+                }
 
-	}
+    }
 
 	@Override
 	@Transactional
@@ -103,6 +109,19 @@ public class TransactionServiceImpl implements TransactionService{
 		return this.transactionRepository.findByFromAccountOrToAccount(id,id);
 	}
 	
-	
+	@Override
+    @Transactional
+    public ResponseEntity<Transaction> updateTransaction(Transaction transaction) {
+        if(transaction.isFlag()) {
+	        double toAccountBalance = transaction.getToAccount().getBalance();       
+	        toAccountBalance = toAccountBalance + transaction.getAmmount();
+	        transaction.getToAccount().setBalance(toAccountBalance);
+	        transaction.setFlag(false);
+			this.accountRepository.save(transaction.getToAccount());
+	        this.transactionRepository.save(transaction);
+	        return ResponseEntity.ok().build();
+        }
+        return null;
+    }
 
 }
