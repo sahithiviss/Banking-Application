@@ -46,6 +46,7 @@ public class TransactionController {
 		return transactionService.findByToAccount(id);
 	}
 	
+<<<<<<< HEAD
 //	@PutMapping("/transaction")
 //    public Transaction updateTransaction(@RequestBody Transaction transaction) {
 //        return transactionService.updateTransaction(transaction);
@@ -55,4 +56,13 @@ public class TransactionController {
     public ResponseEntity<Transaction> updateTransaction(@RequestBody Transaction transaction) {
         return transactionService.updateTransaction(transaction);
     }
+=======
+
+	@PutMapping("/transaction")
+    public Transaction updateTransaction(@RequestBody Transaction transaction) {
+        return transactionService.updateTransaction(transaction);
+    }
+
+
+>>>>>>> 54bc2b7520212cf3f7aa3e9db838f0451a2a553d
 }

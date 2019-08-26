@@ -22,6 +22,8 @@ public interface TransactionService {
 	Optional<List<Transaction>> findByToAccount(Account id);
 
 	Optional<List<Transaction>> findByFromAccountOrToAccount(Account id);
+	
+	Transaction updateTransaction(Transaction transaction);
 
 	ResponseEntity<Transaction> updateTransaction(Transaction transaction);
 

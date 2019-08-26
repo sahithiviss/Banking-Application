@@ -11,7 +11,7 @@ public interface CustomerService {
 
 	List<Customer> listAll();
 
-	String saveCustomer(Customer customer);
+	Customer saveCustomer(Customer customer);
 
 	Customer findById(long id);
 
@@ -21,10 +21,6 @@ public interface CustomerService {
 	
 	Optional<Customer> findByEmailAndPassword(String email,String password);
 	
-    Customer findByPanID(String panID);
-    
-	public Customer findByEmail(String email);
 	
-	public Customer findByPhoneNumber(String phoneNumber);
 
 }

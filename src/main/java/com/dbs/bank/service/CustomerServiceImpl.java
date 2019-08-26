@@ -32,28 +32,8 @@ public class CustomerServiceImpl implements CustomerService{
     
     @Override
     @Transactional
-    public String saveCustomer(Customer customer) {
-    	if((customerRepository.findByPanID(customer.getPanID())==null)
-    			&& (customerRepository.findByEmail(customer.getEmail())==null)
-    					&& (customerRepository.findByPhoneNumber(customer.getPhoneNumber())==null))
-    	{
-    	customerRepository.save(customer);
-    	return "Customer details added";
-    	}
-    	else
-    	{
-    	String result="";
-    	if(customerRepository.findByPanID(customer.getPanID())!=null) {
-    		result+="PAN ID ";
-    	}
-    	if(customerRepository.findByEmail(customer.getEmail())!=null) {
-    		result+="Email ";
-    	}
-    	if(customerRepository.findByPhoneNumber(customer.getPhoneNumber())!=null) {
-    		result+="Phone Number";
-    	}
-    	return result+" Exists";
-    	}
+    public Customer saveCustomer(Customer customer) {
+    	return customerRepository.save(customer);
     }
     
     @Override
@@ -89,23 +69,5 @@ public class CustomerServiceImpl implements CustomerService{
     @Transactional
 	public Optional<Customer> findByEmailAndPassword(String email, String password) {
 		return this.customerRepository.findByEmailAndPassword(email, password);
-	}
-
-	@Override
-	public Customer findByPanID(String panID) {
-		// TODO Auto-generated method stub
-		return this.findByPanID(panID);
-	}
-
-	@Override
-	public Customer findByEmail(String email) {
-		// TODO Auto-generated method stub
-		return this.findByEmail(email);
-	}
-
-	@Override
-	public Customer findByPhoneNumber(String phoneNumber) {
-		// TODO Auto-generated method stub
-		return this.findByPhoneNumber(phoneNumber);
 	}
 }
