@@ -59,7 +59,8 @@ public class TransactionServiceImpl implements TransactionService{
 		            return "Transaction cannot be done... Your account balance will be short of $5,000 with this transaction";
 		        }
 		        else {
-			        transaction.setDate(Date.valueOf(LocalDate.now())); 
+			        transaction.setDate(Date.valueOf(LocalDate.now()));
+			        transaction.setTime(java.time.LocalTime.now());
 		            fromAccountBalance = fromAccountBalance - transaction.getAmmount();
 		            transaction.getFromAccount().setBalance(fromAccountBalance);
 					this.accountRepository.save(transaction.getFromAccount());

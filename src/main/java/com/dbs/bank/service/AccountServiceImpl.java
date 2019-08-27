@@ -54,6 +54,7 @@ public class AccountServiceImpl implements AccountService{
 		      
 		   }
 		 System.out.println(account.getAccountType());
+		 
 		return accountRepository.save(account);
 	}//acc.getAccountType().equalsIgnoreCase("joint")
 
