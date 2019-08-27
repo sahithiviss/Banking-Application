@@ -146,5 +146,23 @@ public class TransactionServiceImpl implements TransactionService{
         
         return null;
     }
+	
+	
+	@Override
+    @Transactional
+    public Transaction rejectTransaction(Transaction transaction) {
+       
+	        double fromAccountBalance = transaction.getFromAccount().getBalance();       
+	        fromAccountBalance = fromAccountBalance + transaction.getAmmount();
+	        transaction.getFromAccount().setBalance(fromAccountBalance);
+	        transaction.setFlag(false);
+			this.accountRepository.save(transaction.getFromAccount());
+	        return this.transactionRepository.save(transaction);
 
+//			this.transactionRepository.save(transaction);
+//	        return ResponseEntity.ok().build();
+
+    }
+
+	
 }

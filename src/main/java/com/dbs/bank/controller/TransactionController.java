@@ -51,6 +51,11 @@ public class TransactionController {
         return transactionService.updateTransaction(transaction);
     }
 	
+	@PutMapping("/transaction/rejected")
+    public Transaction rejectTransaction(@RequestBody Transaction transaction) {
+        return transactionService.rejectTransaction(transaction);
+    }
+	
 //	@PutMapping("/transaction")
 //    public ResponseEntity<Transaction> updateTransaction(@RequestBody Transaction transaction) {
 //        return transactionService.updateTransaction(transaction);

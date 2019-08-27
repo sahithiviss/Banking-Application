@@ -27,4 +27,6 @@ public interface TransactionService {
 	
 	Transaction updateTransaction(Transaction transaction);
 
+	Transaction rejectTransaction(Transaction transaction);
+
 }
