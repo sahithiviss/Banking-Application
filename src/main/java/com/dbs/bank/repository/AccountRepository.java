@@ -12,5 +12,5 @@ import com.dbs.bank.model.Customer;
 public interface AccountRepository extends JpaRepository<Account, Long>{
 
 	List<Account> findByCustomer(Customer id);
-	Account findByAccountType(Account accountType);
+	Account findByAccountType(String accountType);
 }

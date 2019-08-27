@@ -41,8 +41,11 @@ public class AccountServiceImpl implements AccountService{
 		System.out.println("Accounts : " + accountRepository.findByCustomer(id));
 		List<Account> accounts = findByCustomer(id);
 		for(Account acc : accounts) {
-		      if(acc.getAccountType().equalsIgnoreCase("joint")) {
+		      if((acc.getAccountType()).equalsIgnoreCase(account.getAccountType())) {
+		    	 
 		    	 System.out.println();
+		    	 System.out.println(acc.getAccountType());
+		    	 System.out.println(account.getAccountType());
 		         System.out.println("Sorry you already have " + acc.getAccountType() + " account type");
 		         System.out.println();
 		         System.out.println();
@@ -50,8 +53,9 @@ public class AccountServiceImpl implements AccountService{
 		      }
 		      
 		   }
+		 System.out.println(account.getAccountType());
 		return accountRepository.save(account);
-	}
+	}//acc.getAccountType().equalsIgnoreCase("joint")
 
 	@Override
 	public Account findById(long id) {
@@ -77,12 +81,11 @@ public class AccountServiceImpl implements AccountService{
 		return ResponseEntity.ok().build();
 	}
 
-	
 
 	@Override
-	public Account findByAccountType(Account accountType) {
+	public Account findByAccountType(String accountType) {
 		// TODO Auto-generated method stub
-		return null;
+		return accountRepository.findByAccountType(accountType);
 	}
 
 }

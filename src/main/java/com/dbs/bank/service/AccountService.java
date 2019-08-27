@@ -22,6 +22,6 @@ public interface AccountService {
 	
 	List<Account> findByCustomer(Customer id);
 	
-	Account findByAccountType(Account accountType);
+	Account findByAccountType(String accountType);
 
 }
