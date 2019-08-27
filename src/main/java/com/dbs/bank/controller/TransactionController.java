@@ -50,6 +50,11 @@ public class TransactionController {
     public Transaction updateTransaction(@RequestBody Transaction transaction) {
         return transactionService.updateTransaction(transaction);
     }
+	
+//	@PutMapping("/transaction")
+//    public ResponseEntity<Transaction> updateTransaction(@RequestBody Transaction transaction) {
+//        return transactionService.updateTransaction(transaction);
+//    }
 
 
 }

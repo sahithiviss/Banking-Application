@@ -12,7 +12,7 @@ import com.dbs.bank.model.Customer;
 public interface AccountService {
 	List<Account> listAll();
 
-	Account saveAccount(Account account);
+	Account saveAccount(Customer id, Account account);
 
 	Account findById(long id);
 
