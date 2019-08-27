@@ -21,6 +21,10 @@ public interface CustomerService {
 	
 	Optional<Customer> findByEmailAndPassword(String email,String password);
 	
+	Customer findByPanID(String panID);
 	
+	public Customer findByEmail(String email);
+
+	public Customer findByPhoneNumber(String phoneNumber);
 
 }

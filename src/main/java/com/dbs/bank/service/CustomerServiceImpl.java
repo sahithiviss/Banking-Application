@@ -33,7 +33,13 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     @Transactional
     public Customer saveCustomer(Customer customer) {
+    	if((customerRepository.findByPanID(customer.getPanID())==null)
+    			&& (customerRepository.findByEmail(customer.getEmail())==null)
+    					&& (customerRepository.findByPhoneNumber(customer.getPhoneNumber())==null))
+    	{
     	return customerRepository.save(customer);
+    	}
+    	return null;
     }
     
     @Override
@@ -70,5 +76,23 @@ public class CustomerServiceImpl implements CustomerService{
     @Transactional
 	public Optional<Customer> findByEmailAndPassword(String email, String password) {
 		return this.customerRepository.findByEmailAndPassword(email, password);
+	}
+
+	@Override
+	public Customer findByPanID(String panID) {
+		// TODO Auto-generated method stub
+		return this.customerRepository.findByPanID(panID);
+	}
+
+	@Override
+	public Customer findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return this.customerRepository.findByEmail(email);
+	}
+
+	@Override
+	public Customer findByPhoneNumber(String phoneNumber) {
+		// TODO Auto-generated method stub
+		return this.customerRepository.findByPhoneNumber(phoneNumber);
 	}
 }
