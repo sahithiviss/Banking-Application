@@ -32,6 +32,9 @@ public class TransactionServiceImpl implements TransactionService{
 	@Autowired
 	private AccountRepository accountRepository;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	public TransactionServiceImpl(TransactionRepository transactionRepository) {
 		super();
 		this.transactionRepository=transactionRepository;
@@ -59,8 +62,7 @@ public class TransactionServiceImpl implements TransactionService{
 		            return "Transaction cannot be done... Your account balance will be short of $5,000 with this transaction";
 		        }
 		        else {
-			        transaction.setDate(Date.valueOf(LocalDate.now()));
-			        transaction.setTime(java.time.LocalTime.now());
+			        transaction.setDate(Date.valueOf(LocalDate.now())); 
 		            fromAccountBalance = fromAccountBalance - transaction.getAmmount();
 		            transaction.getFromAccount().setBalance(fromAccountBalance);
 					this.accountRepository.save(transaction.getFromAccount());
@@ -70,11 +72,15 @@ public class TransactionServiceImpl implements TransactionService{
 		            	System.out.println(transaction.getToAccount().getBalance());
 						this.accountRepository.save(transaction.getToAccount());
 		            	transactionRepository.save(transaction);
+		            	this.emailService.sendMail(transaction.getFromAccount().getCustomer().getEmail()
+		            			,"Transaction Successfull", "Your Transaction of "+transaction.getAmmount()+" is success and has been transferred to the reciever \nThanks for using our Banking Services");
 				        return "Transaction successfull";
 		            }
 		            else {
 		            	transaction.setFlag(true);
 				        transactionRepository.save(transaction);
+				        this.emailService.sendMail(transaction.getFromAccount().getCustomer().getEmail()
+		            			,"Transaction Pedning", "Your Transaction of "+transaction.getAmmount()+" is under pending, Please await for the bank approval \nThanks for using our Banking Services");
 				        return "Transaction limit exceeded/ Awaiting Bank Approval";
 		            }
 		        }
@@ -106,28 +112,6 @@ public class TransactionServiceImpl implements TransactionService{
 	}
 	
 
-
-
-//	@Override
-//    @Transactional
-//    public ResponseEntity<Transaction> updateTransaction(Transaction transaction) {
-//
-//        if(transaction.isFlag()) {
-//	        double toAccountBalance = transaction.getToAccount().getBalance();       
-//	        toAccountBalance = toAccountBalance + transaction.getAmmount();
-//	        transaction.getToAccount().setBalance(toAccountBalance);
-//	        transaction.setFlag(false);
-//			this.accountRepository.save(transaction.getToAccount());
-//
-//	        //return this.transactionRepository.save(transaction);
-//			this.transactionRepository.save(transaction);
-//	        return ResponseEntity.ok().build();
-//        }
-//        
-//        return null;
-//    }
-	
-
 	@Override
     @Transactional
     public Transaction updateTransaction(Transaction transaction) {
@@ -137,16 +121,12 @@ public class TransactionServiceImpl implements TransactionService{
 	        transaction.getToAccount().setBalance(toAccountBalance);
 	        transaction.setFlag(false);
 			this.accountRepository.save(transaction.getToAccount());
+			this.emailService.sendMail(transaction.getFromAccount().getCustomer().getEmail()
+        			,"Transaction Successfull", "Your Transaction of "+transaction.getAmmount()+" is success/ approved by the bank and has been transferred to the reciever \nThanks for using our Banking Services");
 	        return this.transactionRepository.save(transaction);
-
-//			this.transactionRepository.save(transaction);
-//	        return ResponseEntity.ok().build();
-
         }
-        
         return null;
     }
-	
 	
 	@Override
     @Transactional
@@ -155,14 +135,13 @@ public class TransactionServiceImpl implements TransactionService{
 	        double fromAccountBalance = transaction.getFromAccount().getBalance();       
 	        fromAccountBalance = fromAccountBalance + transaction.getAmmount();
 	        transaction.getFromAccount().setBalance(fromAccountBalance);
+	        transaction.setAmmount(0);
 	        transaction.setFlag(false);
 			this.accountRepository.save(transaction.getFromAccount());
+			this.emailService.sendMail(transaction.getFromAccount().getCustomer().getEmail()
+        			,"Transaction Rejected", "Your Transaction of "+transaction.getAmmount()+" has been rejected by the bacnk. Please contact bank for further information \nThanks for using our Banking Services");
 	        return this.transactionRepository.save(transaction);
-
-//			this.transactionRepository.save(transaction);
-//	        return ResponseEntity.ok().build();
 
     }
 
-	
 }

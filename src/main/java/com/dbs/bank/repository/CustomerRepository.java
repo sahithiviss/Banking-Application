@@ -11,10 +11,10 @@ import com.dbs.bank.model.Customer;
 public interface CustomerRepository extends JpaRepository<Customer, Long>{
 
 	Optional<Customer> findByEmailAndPassword(String email, String password);
-	
-    Customer findByPanID(String panID);
-	
-	public Customer findByEmail(String email);
 
-	public Customer findByPhoneNumber(String phoneNumber);
+	Customer findByPanID(String panID);
+	
+	Customer findByEmail(String email);
+	
+	Customer findByPhoneNumber(String phoneNumber);
 }

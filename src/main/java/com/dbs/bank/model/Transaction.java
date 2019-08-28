@@ -3,7 +3,6 @@ package com.dbs.bank.model;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,7 +26,7 @@ public class Transaction {
 	
 	private Date date; 
 	
-	private LocalTime time;
+	private Time time;
 
 	@Column(columnDefinition="boolean default false")
 	private boolean flag;
@@ -70,11 +69,11 @@ public class Transaction {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public LocalTime getTime() {
+	public Time getTime() {
 		return time;
 	}
-	public void setTime(LocalTime localTime) {
-		this.time = localTime;
+	public void setTime(Time time) {
+		this.time = time;
 	}
 	public Account getFromAccount() {
 		return fromAccount;

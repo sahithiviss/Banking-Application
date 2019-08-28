@@ -9,4 +9,5 @@ import com.dbs.bank.model.Branch;
 public interface BranchRepository extends JpaRepository<Branch, Long>{
 
 	Branch findByBranchName(String branchName);
+
 }

@@ -36,7 +36,7 @@ public class BranchController {
 	}
 	
 	@PostMapping("/branch")
-	public Branch createBranch(@Valid @RequestBody Branch branch) {
+	public Branch createCustomer(@Valid @RequestBody Branch branch) {
 		return branchService.saveBranch(branch);
 		
 	}
