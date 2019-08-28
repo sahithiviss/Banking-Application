@@ -11,4 +11,5 @@ public interface BranchService {
 	Optional<Branch> findByIfsc(long id);
 	Branch saveBranch(Branch branch);
 	List<Branch> listAll();
+	Branch findByBranchName(String branchName);
 }

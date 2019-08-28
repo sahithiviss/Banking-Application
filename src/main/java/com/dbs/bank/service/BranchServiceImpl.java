@@ -37,7 +37,18 @@ public class BranchServiceImpl implements BranchService{
 
 	@Override
 	public Branch saveBranch(Branch branch) {
+	if(branchRepository.findByBranchName(branch.getBranchName())==null)
 		return this.branchRepository.save(branch);
+	else
+		return null;
+	}
+
+
+
+	@Override
+	public Branch findByBranchName(String branchName) {
+		// TODO Auto-generated method stub
+		return this.branchRepository.findByBranchName(branchName);
 	}
 
 }

@@ -8,5 +8,5 @@ import com.dbs.bank.model.Branch;
 @Repository
 public interface BranchRepository extends JpaRepository<Branch, Long>{
 
-
+	Branch findByBranchName(String branchName);
 }
