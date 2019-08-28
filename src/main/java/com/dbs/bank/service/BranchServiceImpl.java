@@ -39,7 +39,6 @@ public class BranchServiceImpl implements BranchService{
 	public Branch saveBranch(Branch branch) {
 	if(branchRepository.findByBranchName(branch.getBranchName())==null)
 		return this.branchRepository.save(branch);
-	else
 		return null;
 	}
 
