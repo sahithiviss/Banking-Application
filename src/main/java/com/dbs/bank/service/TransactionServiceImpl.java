@@ -65,6 +65,7 @@ public class TransactionServiceImpl implements TransactionService{
 			        transaction.setDate(Date.valueOf(LocalDate.now())); 
 		            fromAccountBalance = fromAccountBalance - transaction.getAmmount();
 		            transaction.getFromAccount().setBalance(fromAccountBalance);
+		            transaction.setTime(java.time.LocalTime.now());
 					this.accountRepository.save(transaction.getFromAccount());
 		            if(sum+transaction.getAmmount()<=10000) {
 		            	toAccountBalance = toAccountBalance + transaction.getAmmount();

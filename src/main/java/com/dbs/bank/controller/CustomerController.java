@@ -40,7 +40,7 @@ public class CustomerController {
 	public Optional<Customer> getCustomerByEmailAndPassword(@PathVariable("email") String email,@PathVariable("password") String password) {
 		return customerService.findByEmailAndPassword(email, password);
 	}
-	
+		
 	@PutMapping("/customer")
 	public Customer updateCustomer(@RequestBody Customer customerDetails) {
 		return customerService.updateCustomer(customerDetails);

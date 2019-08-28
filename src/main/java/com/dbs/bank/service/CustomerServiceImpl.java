@@ -1,5 +1,6 @@
 package com.dbs.bank.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.dbs.bank.model.Customer;
@@ -15,6 +19,10 @@ import com.dbs.bank.repository.CustomerRepository;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
+	
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Autowired
     private CustomerRepository customerRepository;
@@ -37,7 +45,10 @@ public class CustomerServiceImpl implements CustomerService{
     			&& (customerRepository.findByEmail(customer.getEmail())==null)
     					&& (customerRepository.findByPhoneNumber(customer.getPhoneNumber())==null))
     	{
-    	return customerRepository.save(customer);
+    		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+    		authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+    		customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
+    		return customerRepository.save(customer);
     	}
     	return null;
     }
@@ -72,10 +83,18 @@ public class CustomerServiceImpl implements CustomerService{
     	return ResponseEntity.ok().build();
     }
     
+    
+    
     @Override
     @Transactional
 	public Optional<Customer> findByEmailAndPassword(String email, String password) {
-		return this.customerRepository.findByEmailAndPassword(email, password);
+    	Customer currentCustomer = findByEmail(email);
+    	if(bCryptPasswordEncoder.matches(password, currentCustomer.getPassword())) {
+    		System.out.println("\n\n\n en pass : " + currentCustomer.getPassword()+"\n\n\n");
+    		return this.customerRepository.findByEmailAndPassword(email, currentCustomer.getPassword());
+    	}
+
+		return null;
 	}
 
 	@Override
