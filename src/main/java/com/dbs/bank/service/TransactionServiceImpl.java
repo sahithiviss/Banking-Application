@@ -55,13 +55,14 @@ public class TransactionServiceImpl implements TransactionService{
 			for(int i=0;i<transactions.size();i++) {
 				sum=sum+transactions.get(i).getAmmount();
 			}
-			System.out.println("\n"+transactions+"\n"+sum);
+				System.out.println("\n"+transactions+"\n"+sum);
 				double fromAccountBalance = transaction.getFromAccount().getBalance();
 		        double toAccountBalance = transaction.getToAccount().getBalance();
 		        if((fromAccountBalance - transaction.getAmmount()) < 5000) {
 		            return "Transaction cannot be done... Your account balance will be short of $5,000 with this transaction";
 		        }
 		        else {
+		        	transaction.setTime(java.time.LocalTime.now());
 			        transaction.setDate(Date.valueOf(LocalDate.now())); 
 		            fromAccountBalance = fromAccountBalance - transaction.getAmmount();
 		            transaction.getFromAccount().setBalance(fromAccountBalance);
