@@ -71,6 +71,7 @@ public class CustomerServiceImpl implements CustomerService{
     	customer.setPanID(customerDetails.getPanID());
     	customer.setGender(customerDetails.getGender());
     	customer.setDateOfBirth(customerDetails.getDateOfBirth());
+    	customer.setActivated(true);
     	return customerRepository.save(customer);
     	
     }
@@ -90,7 +91,6 @@ public class CustomerServiceImpl implements CustomerService{
 	public Optional<Customer> findByEmailAndPassword(String email, String password) {
     	Customer currentCustomer = findByEmail(email);
     	if(bCryptPasswordEncoder.matches(password, currentCustomer.getPassword())) {
-    		System.out.println("\n\n\n en pass : " + currentCustomer.getPassword()+"\n\n\n");
     		return this.customerRepository.findByEmailAndPassword(email, currentCustomer.getPassword());
     	}
 
