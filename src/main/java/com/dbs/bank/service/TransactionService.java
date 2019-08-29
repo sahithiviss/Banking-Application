@@ -13,7 +13,7 @@ public interface TransactionService {
 	
 	List<Transaction> listAll();
 
-	String saveTransaction(Transaction transaction);
+	Transaction saveTransaction(Transaction transaction);
 
 	Transaction findById(long id);
 

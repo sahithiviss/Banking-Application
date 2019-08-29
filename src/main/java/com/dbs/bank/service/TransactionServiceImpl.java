@@ -48,18 +48,20 @@ public class TransactionServiceImpl implements TransactionService{
 
 	@Override
 	@Transactional
-	public String saveTransaction(Transaction transaction) {
+	public Transaction saveTransaction(Transaction transaction) {
 			
 			List<Transaction> transactions=transactionRepository.findByFromAccountAndDate(transaction.getFromAccount(),Date.valueOf(LocalDate.now()));
 			long sum=0;
 			for(int i=0;i<transactions.size();i++) {
-				sum=sum+transactions.get(i).getAmmount();
+				if(transactions.get(i).getDate()==(new java.util.Date()));
+						System.out.println("yooo");
+						sum=sum+transactions.get(i).getAmmount();
 			}
 				System.out.println("\n"+transactions+"\n"+sum);
 				double fromAccountBalance = transaction.getFromAccount().getBalance();
 		        double toAccountBalance = transaction.getToAccount().getBalance();
 		        if((fromAccountBalance - transaction.getAmmount()) < 5000) {
-		            return "Transaction cannot be done... Your account balance will be short of $5,000 with this transaction";
+		            return null;
 		        }
 		        else {
 		        	transaction.setTime(java.time.LocalTime.now());
@@ -73,18 +75,16 @@ public class TransactionServiceImpl implements TransactionService{
 		            	transaction.getToAccount().setBalance(toAccountBalance);
 		            	System.out.println(transaction.getToAccount().getBalance());
 						this.accountRepository.save(transaction.getToAccount());
-		            	transactionRepository.save(transaction);
-		            	this.emailService.sendMail(transaction.getFromAccount().getCustomer().getEmail()
-		            			,"Transaction Successfull", "Your Transaction of "+transaction.getAmmount()+" is success and has been transferred to the reciever \nThanks for using our Banking Services");
-				        return "Transaction successfull";
+//		            	this.emailService.sendMail(transaction.getFromAccount().getCustomer().getEmail()
+//		            			,"Transaction Successfull", "Your Transaction of "+transaction.getAmmount()+" is success and has been transferred to the reciever \nThanks for using our Banking Services");
 		            }
 		            else {
 		            	transaction.setFlag(true);
-				        transactionRepository.save(transaction);
-				        this.emailService.sendMail(transaction.getFromAccount().getCustomer().getEmail()
-		            			,"Transaction Pedning", "Your Transaction of "+transaction.getAmmount()+" is under pending, Please await for the bank approval \nThanks for using our Banking Services");
-				        return "Transaction limit exceeded/ Awaiting Bank Approval";
+//				        this.emailService.sendMail(transaction.getFromAccount().getCustomer().getEmail()
+//		            			,"Transaction Pedning", "Your Transaction of "+transaction.getAmmount()+" is under pending, Please await for the bank approval \nThanks for using our Banking Services");
 		            }
+	            	return transactionRepository.save(transaction);
+
 		        }
 
 	}
