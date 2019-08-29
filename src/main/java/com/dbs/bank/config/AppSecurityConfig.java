@@ -17,46 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	
-//	@Autowired
-//    public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-//        authenticationManagerBuilder
-//                .userDetailsService(userDetailsService)
-//                .passwordEncoder(passwordEncoder());
-//    }
-//
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//	
-//	@Autowired
-//    private UserDetailsService userDetailsService;
-//	
-//	@Bean
-//	public UserDetailsService userDetailsService() {
-//	    return super.userDetailsService();
-//	}
-//	
-//	@Override
-//	public void configure(WebSecurity web) throws Exception {
-//		web.ignoring().antMatchers("/resources/**");
-//	}
-//	
-//	@Override
-//	protected void configure(HttpSecurity http) throws Exception {
-//		http.authorizeRequests()
-//			.antMatchers("/api/v1/**")
-//			.permitAll().
-//			antMatchers("/api/v1/customer/**")
-//				.hasAnyRole("USER", "ADMIN")
-//				.antMatchers("/api/v1/banker/**").hasAnyRole("ADMIN")
-//				.anyRequest().authenticated().and().formLogin()
-//				.loginPage("/login").permitAll().and().logout().permitAll();
-//
-//		http.csrf().disable();
-//	}
-//	
-	
+
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception
